@@ -8,6 +8,7 @@
 		<typeAlias type="com.bean.User" alias="User"></typeAlias>
 		<typeAlias type="com.bean.Blog" alias="Blog"></typeAlias>
 		<typeAlias type="com.bean.Post" alias="Post"></typeAlias>
+		<typeAlias type="com.bean.PostsByUser" alias="PostsByUser"></typeAlias>
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">

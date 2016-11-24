@@ -3,6 +3,8 @@ package com.service;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
+import com.bean.Blog;
+import com.bean.PostsByUser;
 import com.bean.User;
 import com.mapper.UserMapper;
 import com.util.MyBatisUtil;
@@ -49,6 +51,13 @@ public class UserService {
 			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 			userMapper.deleteUser(userId);
 			sqlSession.commit();
+		}
+	}
+
+	public List<PostsByUser> getPostsByUser(Blog blog, User user) {
+		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			return userMapper.getPostsByUser(blog.getBlogId(), user.getUserId());
 		}
 	}
 }

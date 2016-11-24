@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.util.MyBatisUtil;
 import com.bean.Blog;
+import com.bean.Post;
 import com.mapper.BlogMapper;
 
 public class BlogService {
@@ -50,6 +51,13 @@ public class BlogService {
 			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
 			blogMapper.deleteBlog(blogId);
 			sqlSession.commit();
+		}
+	}
+
+	public List<Post> getPostsByBlog(Blog blog) {
+		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
+			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
+			return blogMapper.getPostsByBlog(blog);
 		}
 	}
 }

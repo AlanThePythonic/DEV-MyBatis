@@ -6,12 +6,15 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.bean.Blog;
+import com.bean.PostsByUser;
 import com.bean.User;
 import com.service.BlogService;
 import com.service.UserService;
 
 public class UserServiceTest {
-	
+
 	private static UserService userService;
 	private static BlogService blogService;
 
@@ -28,6 +31,7 @@ public class UserServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGetUserById() {
 		User user = userService.getUserById(1);
 		Assert.assertNotNull(user);
@@ -36,6 +40,7 @@ public class UserServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGetAllUsers() {
 		List<User> users = userService.getAllUsers();
 		Assert.assertNotNull(users);
@@ -47,6 +52,19 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void testGetPostsByUser() {
+		Blog blog = blogService.getBlogById(2);
+		User user = userService.getUserById(7);
+		List<PostsByUser> postsByUser = userService.getPostsByUser(blog, user);
+		Assert.assertNotNull(postsByUser);
+		for (PostsByUser userPost : postsByUser) {
+			System.out.println(userPost);
+		}
+		System.out.println();
+	}
+
+	@Test
+	@Ignore
 	public void testInsertUserz() {
 		User user = new User();
 		user.setEmailId("test_email_" + System.currentTimeMillis() + "@gmail.com");

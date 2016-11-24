@@ -37,8 +37,8 @@ public class PostServiceTest {
 	@Test
 	public void testInsertPost() {
 		Post post = new Post();
-		post.setTitle("Day 1");
-		post.setContent("I am happy today");
+		post.setTitle("Day 3");
+		post.setContent("I am not happy today");
 		post.setCreatedOn(new Date());
 		post.setBlog(blogService.getBlogById(1));
 		Assert.assertNotNull(post);
