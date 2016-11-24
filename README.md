@@ -7,6 +7,9 @@ Select :
   >> One to One, One to Many
 
 Tables Relationship : 
+<p align="center">
+  <img src="Relationship.jpg"/>
+</p>
 ```sql
 /* Create Table of User */
 CREATE TABLE user (
