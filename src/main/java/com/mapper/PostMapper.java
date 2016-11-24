@@ -1,6 +1,7 @@
 package com.mapper;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import com.bean.Post;
 import com.bean.Blog;
-
+@Mapper
 public interface PostMapper {
 
 	@Select("SELECT post_id as postId, title, content, created_on as createOn, blog_id as blogId FROM POST WHERE POST_ID = #{postId}")

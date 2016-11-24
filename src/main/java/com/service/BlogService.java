@@ -3,12 +3,13 @@ package com.service;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
 
 import com.util.MyBatisUtil;
 import com.bean.Blog;
 import com.bean.Post;
 import com.mapper.BlogMapper;
-
+@Service
 public class BlogService {
 
 	public void insertBlog(Blog blog) {

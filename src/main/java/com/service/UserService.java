@@ -2,13 +2,14 @@ package com.service;
 
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
 
 import com.bean.Blog;
 import com.bean.PostsByUser;
 import com.bean.User;
 import com.mapper.UserMapper;
 import com.util.MyBatisUtil;
-
+@Service
 public class UserService {
 
 	public void insertUser(User user) {

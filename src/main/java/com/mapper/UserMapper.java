@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -14,7 +15,7 @@ import org.apache.ibatis.annotations.One;
 import com.bean.Blog;
 import com.bean.PostsByUser;
 import com.bean.User;
-
+@Mapper
 public interface UserMapper {
 
 	@Insert("INSERT INTO USER(user_id, email_id, password, first_name, last_name, blog_id) VALUES (#{userId}, #{emailId}, #{password}, #{firstName}, #{lastName}, #{blog.blogId})")

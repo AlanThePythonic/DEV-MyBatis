@@ -1,10 +1,12 @@
 package com.service;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
+
 import com.bean.Post;
 import com.mapper.PostMapper;
 import com.util.MyBatisUtil;
-
+@Service
 public class PostService {
 
 	public Post getAllPostByPostId(int postId) {
