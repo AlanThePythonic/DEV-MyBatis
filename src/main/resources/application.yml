@@ -1,0 +1,95 @@
+# Default DEV
+#   Test Env：java -jar my-spring-boot.jar --spring.profiles.active=test
+#   Prod Env：java -jar my-spring-boot.jar --spring.profiles.active=prod
+spring:
+  profiles:
+    active: dev
+#  cache:
+#    type: CAFFEINE #Specified cache type
+#    cache-names:
+#      - getPersonById
+#      - name2
+#    caffeine:
+#      spec: maximumSize=500,expireAfterWrite=5s
+      
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    hikari:
+      maxLifetime: 1765000 # Connection life cycle, be retired if no reference and overtime,Default : 30mins
+      maximumPoolSize: 15 #Maximum connection in Pool, Formula:((core_count * 2) + effective_spindle_count)
+
+  mail:
+    host: smtp.abc.com
+    username: service@abc.com
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+    
+server:
+  port: 8082
+management:
+  port: 54001
+  health:
+    mail:
+      enabled: false
+info:
+  app:
+    name: "@project.name@" #get from pom.xml
+    description: "@project.description@"
+    version: "@project.version@"
+    spring-boot-version: "@project.parent.version@"
+      
+---
+# Development Env Configuration
+spring:
+  profiles: dev
+  redis:
+    cluster:
+      nodes:
+        - 192.168.0.17:6390
+        - 192.168.0.17:6391
+        - 192.168.0.17:6392
+        - 192.168.0.9:6390
+        - 192.168.0.9:6391
+        - 192.168.0.9:6392
+  datasource:
+    url: jdbc:mysql://localhost:3306/lab
+
+myProps: #Custom Property
+  simpleProp: simplePropValue
+  arrayProps: 1,2,3,4,5
+  listProp1:
+    - name: abc
+      value: abcValue
+    - name: efg
+      value: efgValue
+  listProp2:
+    - config2Value1
+    - config2Vavlue2
+  mapProps:
+    key1: value1
+    key2: value2
+  
+---
+# Test Env
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://localhost:3306/lab
+  
+---
+# Prod Env
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/lab
