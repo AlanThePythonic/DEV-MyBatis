@@ -15,7 +15,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: 87iu0080A
     hikari:
       maxLifetime: 1765000 # Connection life cycle, be retired if no reference and overtime,Default : 30mins
       maximumPoolSize: 15 #Maximum connection in Pool, Formula:((core_count * 2) + effective_spindle_count)
@@ -33,7 +33,7 @@ spring:
             required: true
 
 mybatis:
-  mapperLocations: classpath:mapper/*.xml
+  mapperLocations: classpath:/java/com/mapper/*.java
     
 server:
   port: 8082
