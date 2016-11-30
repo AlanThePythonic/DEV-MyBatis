@@ -21,8 +21,8 @@ public class CacheConfig {
 	public static final int DEFAULT_TTL = 10;
 
 	public enum Caches {
-		
-		getPersonById(5), getSomething, getOtherthing(300, 1000),;
+
+		getUserById(4), getAllUser(), getPostsByBlog(5);
 
 		Caches() {
 		}

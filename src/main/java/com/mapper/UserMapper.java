@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.One;
 import com.bean.Blog;
 import com.bean.PostsByUser;
 import com.bean.User;
+
 @Mapper
 public interface UserMapper {
 

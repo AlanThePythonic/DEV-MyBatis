@@ -1,64 +1,46 @@
 package com.service;
 
 import java.util.List;
-import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bean.Blog;
 import com.bean.PostsByUser;
 import com.bean.User;
 import com.mapper.UserMapper;
-import com.util.MyBatisUtil;
+
 @Service
-public class UserService {
+@Transactional
+public class UserService implements BaseService {
+
+	@Autowired
+	private UserMapper userService;
 
 	public void insertUser(User user) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-			userMapper.insertUser(user);
-			sqlSession.commit();
-		}
+		userService.insertUser(user);
 	}
 
+	@Cacheable(value = "getUserById", sync = true)
 	public User getUserById(Integer userId) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-			return userMapper.getUserById(userId);
-		}
+		return userService.getUserById(userId);
 	}
 
+	@Cacheable(value = "getAllUser", sync = true)
 	public List<User> getAllUsers() {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-			return userMapper.getAllUsers();
-		}
+		return userService.getAllUsers();
 	}
 
 	public void updateUser(User user) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-			userMapper.updateUser(user);
-			sqlSession.commit();
-		}
+		userService.updateUser(user);
 	}
 
 	public void deleteUser(Integer userId) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-			userMapper.deleteUser(userId);
-			sqlSession.commit();
-		}
+		userService.deleteUser(userId);
 	}
 
 	public List<PostsByUser> getPostsByUser(Blog blog, User user) {
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-			return userMapper.getPostsByUser(blog.getBlogId(), user.getUserId());
-		}
+		return userService.getPostsByUser(blog.getBlogId(), user.getUserId());
 	}
 }

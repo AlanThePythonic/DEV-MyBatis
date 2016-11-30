@@ -2,32 +2,24 @@ package com.mybatis;
 
 import java.util.Date;
 import java.util.List;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.bean.Blog;
 import com.bean.Post;
 import com.service.BlogService;
-import com.service.PostService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class BlogServiceTest {
 
-	private static BlogService blogService;
-	private static PostService postService;
-
-	@BeforeClass
-	public static void setup() {
-		blogService = new BlogService();
-		postService = new PostService();
-	}
-
-	@AfterClass
-	public static void teardown() {
-		blogService = null;
-		postService = null;
-	}
+	@Autowired
+	private BlogService blogService;
 
 	@Test
 	@Ignore
@@ -46,7 +38,9 @@ public class BlogServiceTest {
 			System.out.println(blog);
 		}
 	}
+
 	@Test
+	@Cacheable(value = "getPostsByBlog", sync = true)
 	public void testGetPostsByBlog() {
 		List<Post> posts = blogService.getPostsByBlog(blogService.getBlogById(1));
 		Assert.assertNotNull(posts);

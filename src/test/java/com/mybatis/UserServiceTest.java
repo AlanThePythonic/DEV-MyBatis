@@ -1,37 +1,36 @@
 package com.mybatis;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.bean.Blog;
 import com.bean.PostsByUser;
 import com.bean.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.BlogService;
 import com.service.UserService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class UserServiceTest {
 
-	private static UserService userService;
-	private static BlogService blogService;
+	protected final ObjectMapper objectMapper = new ObjectMapper();
 
-	@BeforeClass
-	public static void setup() {
-		userService = new UserService();
-		blogService = new BlogService();
-	}
+	@Autowired
+	private UserService userService;
 
-	@AfterClass
-	public static void teardown() {
-		userService = null;
-		blogService = null;
-	}
+	@Autowired
+	private BlogService blogService;
 
 	@Test
-	@Ignore
 	public void testGetUserById() {
 		User user = userService.getUserById(1);
 		Assert.assertNotNull(user);
@@ -52,6 +51,7 @@ public class UserServiceTest {
 	}
 
 	@Test
+	@Ignore
 	public void testGetPostsByUser() {
 		Blog blog = blogService.getBlogById(2);
 		User user = userService.getUserById(7);
@@ -65,10 +65,10 @@ public class UserServiceTest {
 
 	@Test
 	@Ignore
-	public void testInsertUserz() {
+	public void testInsertUsers() {
 		User user = new User();
 		user.setEmailId("test_email_" + System.currentTimeMillis() + "@gmail.com");
-		user.setPassword("secret");
+		user.setPassword("secretTest");
 		user.setFirstName("TestFirstName");
 		user.setLastName("TestLastName");
 		user.setBlog(blogService.getBlogById(1));
@@ -102,5 +102,39 @@ public class UserServiceTest {
 		userService.deleteUser(user.getUserId());
 		User deletedUser = userService.getUserById(4);
 		Assert.assertNull(deletedUser);
+	}
+
+	@Test
+	public void localCacheTest() throws JsonProcessingException, InterruptedException {
+
+		Thread.sleep(5000);
+
+		System.out.println("First："); // Get data from database initially
+		Instant start = Instant.now();
+		List<User> users = userService.getAllUsers();
+		Instant end = Instant.now();
+		System.out.println("1st time: {}" + objectMapper.writeValueAsString(users));
+		System.out.println("Duration : " + Duration.between(start, end).getNano());
+
+		System.out.println("Second："); // Get data from cache
+		start = Instant.now();
+		users = userService.getAllUsers();
+		end = Instant.now();
+		System.out.println("2nd time: {}" + objectMapper.writeValueAsString(users));
+		System.out.println("Duration : " + Duration.between(start, end).getNano());
+
+		Thread.sleep(5000);
+
+		System.out.println("Third："); // After 5 s, Get from database
+		start = Instant.now();
+		System.out.println("3rd time: {}" + objectMapper.writeValueAsString(users));
+		end = Instant.now();
+		System.out.println("Duration : " + Duration.between(start, end).getNano());
+
+		System.out.println("Fouth："); // Get from cache
+		start = Instant.now();
+		System.out.println("4th time: {}" + objectMapper.writeValueAsString(users));
+		end = Instant.now();
+		System.out.println("Duration : " + Duration.between(start, end).getNano());
 	}
 }

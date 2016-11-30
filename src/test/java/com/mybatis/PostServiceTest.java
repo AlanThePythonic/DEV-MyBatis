@@ -1,31 +1,25 @@
 package com.mybatis;
 
 import java.util.Date;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.bean.Post;
 import com.service.BlogService;
 import com.service.PostService;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class PostServiceTest {
 
-	private static PostService postService;
-	private static BlogService blogService;
-
-	@BeforeClass
-	public static void setup() {
-		postService = new PostService();
-		blogService = new BlogService();
-	}
-
-	@AfterClass
-	public static void teardown() {
-		postService = null;
-		blogService = null;
-	}
+	@Autowired
+	private PostService postService;
+	@Autowired
+	private BlogService blogService;
 
 	@Test
 	@Ignore

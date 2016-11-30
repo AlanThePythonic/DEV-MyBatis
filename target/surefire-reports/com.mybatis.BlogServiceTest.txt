@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.mybatis.BlogServiceTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 5, Time elapsed: 0.846 sec - in com.mybatis.BlogServiceTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 5, Time elapsed: 22.863 sec - in com.mybatis.BlogServiceTest

@@ -7,8 +7,9 @@ spring:
 #  cache:
 #    type: CAFFEINE #Specified cache type
 #    cache-names:
-#      - getPersonById
-#      - name2
+#      - getUserById
+#      - getAllUser
+#      - getPostsByBlog
 #    caffeine:
 #      spec: maximumSize=500,expireAfterWrite=5s
       

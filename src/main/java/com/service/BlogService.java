@@ -1,64 +1,43 @@
 package com.service;
 
 import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import com.util.MyBatisUtil;
+import org.springframework.transaction.annotation.Transactional;
 import com.bean.Blog;
 import com.bean.Post;
 import com.mapper.BlogMapper;
+
 @Service
-public class BlogService {
+@Transactional
+public class BlogService implements BaseService {
+
+	@Autowired
+	private BlogMapper blogService;
 
 	public void insertBlog(Blog blog) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
-			blogMapper.insertBlog(blog);
-			sqlSession.commit();
-		}
+		blogService.insertBlog(blog);
 	}
 
 	public Blog getBlogById(Integer blogId) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
-			return blogMapper.getBlogById(blogId);
-		}
+		return blogService.getBlogById(blogId);
 	}
 
 	public List<Blog> getAllBlogs() {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
-			return blogMapper.getAllBlogs();
-		}
+		return blogService.getAllBlogs();
 	}
 
 	public void updateBlog(Blog blog) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
-			blogMapper.updateBlog(blog);
-			sqlSession.commit();
-		}
+		blogService.updateBlog(blog);
 	}
 
 	public void deleteBlog(Integer blogId) {
-
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
-			blogMapper.deleteBlog(blogId);
-			sqlSession.commit();
-		}
+		blogService.deleteBlog(blogId);
 	}
 
+	@Cacheable(value = "getPostsByBlog", sync = true)
 	public List<Post> getPostsByBlog(Blog blog) {
-		try (SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession()) {
-			BlogMapper blogMapper = sqlSession.getMapper(BlogMapper.class);
-			return blogMapper.getPostsByBlog(blog);
-		}
+		return blogService.getPostsByBlog(blog);
 	}
 }
