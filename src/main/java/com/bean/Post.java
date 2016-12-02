@@ -2,6 +2,8 @@ package com.bean;
 
 import java.util.Date;
 
+@SuppressWarnings("restriction")
+@sun.misc.Contended
 public class Post {
 
 	private Integer postId;
