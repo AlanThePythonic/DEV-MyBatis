@@ -18,12 +18,12 @@ public class RegexUtils {
 		Pattern p = Pattern.compile(REGEX);
 
 		if (INPUT == null) {
-			System.out.println("INPUT不能为NULL！");
+			System.out.println("Input can not be null!");
 			return resultList;
 		}
 
 		if (p == null) {
-			System.out.println("构造Pattern时发生错误！");
+			System.out.println("Error occured when building pattern!");
 			return resultList;
 		}
 		Matcher m = p.matcher(INPUT);
